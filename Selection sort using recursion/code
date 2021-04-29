@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int minimumindex(int arr[],int i,int j)
+{
+    if(i==j)
+    {
+        return i;
+    }
+    
+    int min=minimumindex(arr,i+1,j);
+    
+    if(arr[i]<arr[min])
+    {
+        return i;
+    }
+    else
+    {
+        return min;
+    }
+}
+
+void selectionsort(int arr[],int n,int i)
+{
+    if(i!=n)
+    {
+        int k=minimumindex(arr,i,n-1);
+        if(k!=i)
+        {
+            int temp=arr[i];
+            arr[i]=arr[k];
+            arr[k]=temp;
+        }
+        selectionsort(arr,n,i+1);
+    }
+}
+
+int main()
+{
+    int i, j, count, temp;
+    float start, end;
+
+    printf("How many numbers u are going to enter?: ");
+    scanf("%d", &count);
+    int number[count];
+
+    for (i = 0; i < count; i++)
+        number[i] = rand();
+    start = clock();
+    selectionsort(number,count,0);
+    end=clock();
+    printf("\n Time taken to sort %d numbers is %f Secs\n",count, (((double)(end-start))/CLOCKS_PER_SEC));
+    for(i=0;i<count;i++)
+    {
+        printf("%d-",number[i]);
+    }
+    return 0;
+}
