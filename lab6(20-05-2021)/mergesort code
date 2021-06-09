@@ -1,0 +1,80 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include <time.h>
+void merge(int arr[], int l, int m, int r)
+{
+    int i, j, k;
+    int n1 = m - l + 1;
+    int n2 = r - m;
+ 
+    int a1[n1], a2[n2];
+
+    for (i = 0; i < n1; i++)
+        a1[i] = arr[l + i];
+    for (j = 0; j < n2; j++)
+        a2[j] = arr[m + 1 + j];
+ 
+    i = 0; 
+    j = 0; 
+    k = l; 
+    while (i < n1 && j < n2) {
+        if (a1[i] <= a2[j]) {
+            arr[k] = a1[i];
+            i++;
+        }
+        else {
+            arr[k] = a2[j];
+            j++;
+        }
+        k++;
+    }
+ 
+    while (i < n1) {
+        arr[k] = a1[i];
+        i++;
+        k++;
+    }
+ 
+    while (j < n2) {
+        arr[k] = a2[j];
+        j++;
+        k++;
+    }
+}
+ 
+void mergeSort(int arr[], int l, int r)
+{
+    if (l < r) {
+        int m = l + (r - l) / 2;
+        mergeSort(arr, l, m);
+        mergeSort(arr, m + 1, r);
+        merge(arr, l, m, r);
+    }
+}
+int main(){
+
+    int size,i,n; 
+    clock_t start, end; 
+    printf("Enter the size of the list: ");
+    scanf("%d", &n);
+    int arr[n];
+    for (i = 0; i < n; i++)
+    {
+        int no = rand() % n + 1;
+        arr[i] = no;
+
+    }
+    printf("Unsorted Array:\t");
+    for (int i=0; i < n; i++)
+          printf("%d ",arr[i]);
+    start = clock();
+    mergeSort(arr, 0,n-1);
+    end = clock();
+    float ti = ((double)(end - start)/CLOCKS_PER_SEC);
+    printf("\nSorted Array:\t");
+    for (int i=0; i < n; i++)
+       printf("%d ",arr[i]);
+
+    printf("\nTime taken: %f", ti); 
+   return 0;
+}
