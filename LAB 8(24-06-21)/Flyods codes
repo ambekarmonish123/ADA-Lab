@@ -1,0 +1,50 @@
+#include<stdio.h>
+#include<conio.h>
+#include <time.h>
+#define INF 9999
+
+int min(int a,int b){
+    if(a<b){
+        return a;
+    }
+    else{
+        return b;
+    }
+}
+
+void main(){
+    int n;
+    float start, end;
+    printf("No of vertices: ");
+    scanf("%d",&n);
+    printf("Enter Weight matrix(-1 if there is no edge): \n");
+    int a[n+1][n+1];
+    for(int i=1; i<=n; i++)
+        for(int j=1; j<=n; j++){
+            scanf("%d",&a[i][j]);
+            if(a[i][j] == -1)
+                a[i][j] = INF;
+        }
+
+    int k=0;
+    start = clock();
+    for(k=1; k<=n; k++){
+        for(int i=1; i<=n; i++){
+            for(int j=1; j<=n; j++){
+                a[i][j] = min(a[i][j], (a[i][k]+a[k][j]));
+            }
+        }
+    }
+    end=clock();
+    printf("\n Time taken is %f", (((double)(end-start))/CLOCKS_PER_SEC));
+    printf("Distance matrix: \n");
+    for(int i=1; i<=n; i++){
+        for(int j=1; j<=n; j++){
+            if(a[i][j] >= INF)
+                printf("INF ");
+            else                
+                printf("%d   ",a[i][j]);
+        }
+        printf("\n");
+    }
+}        
