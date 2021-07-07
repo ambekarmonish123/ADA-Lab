@@ -1,0 +1,68 @@
+#include<stdio.h>
+#include <time.h>
+void merge(int b[],int c[],int a[],int nOfB,int nOfC){
+    int i=0,j=0,k=0;
+    while(i<nOfB&&j<nOfC){
+        if(b[i]<=c[j]){
+            a[k]=b[i];
+            i++;
+        }else{
+            a[k]=c[j];
+            j++;
+        }
+        k++;
+    }
+    if(i==nOfB){
+        for(j;j<nOfC;j++){
+            a[k]=c[j];
+            k++;
+        }
+    }
+    else{
+        for(i;i<nOfC;i++){
+            a[k]=b[i];
+            k++;
+        }
+    }
+}
+void inputArray(int a[],int n){
+    int i;
+    for(i=0;i<n;i++){
+        scanf("%d",&a[i]);
+    }
+}
+int main(){
+    int n1,n2,i,n,median;
+    clock_t start, end;
+    printf("Enter the number of elements in array 1\n");
+    scanf("%d",&n1);
+    printf("Enter the sort array 1\n");
+    int b[n1];
+    inputArray(b,n1);
+    printf("Enter the number of elements in array 2\n");
+    scanf("%d",&n2);
+    printf("Enter the sort array 2\n");
+    int c[n2];
+    inputArray(c,n2);
+    n=n1+n2;
+    int a[n];
+    start = clock();
+    merge(b,c,a,n1,n2);
+    end = clock();
+    for(i=0;i<n1+n2;i++){
+        printf("%d\t",a[i]);
+    }
+    printf("\n");
+    float ti = ((double)(end - start)/CLOCKS_PER_SEC);
+    printf("\nTime taken: %f", ti);
+    printf("\n");
+    if(n%2==1){
+        median=(n+1)/2;
+        printf("Median is %d\n",a[median-1]);
+    }
+    else {
+        median=(n)/2;
+        printf("Median is %f\n",(float)(a[median-1]+a[median])/2);
+    }
+    return 0;
+}
